@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+	#c0,#c1,#c2,#c3,#c4{
+	position: absolute;
+	width: 300px;
+	height: 510px;
+	}
+	#c0{	z-index: 0;	}
+	#c1{	z-index: 1;	}
+	#c2{	z-index: 2;	}
+	#c3{	z-index: 3;	}
+	#c4{	z-index: 4;	}
+	#c5{	z-index: 5;
+	position: absolute;
+	left: 240px;
+	top: 330px;
+	width: 60px;	
+	height: 84px;	
+	}
+	</style>
+<script type="text/javascript">
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+var player=document.getElementById("player");
+	player.play();
+}
+
+</script>
+
+<script type="text/javascript">
+var ib=1;
+	var myb=new Array();
+	myb[1]="../images/b1.jpg";
+	myb[2]="../images/b2.jpg";
+	myb[3]="../images/b3.jpg";
+	myb[4]="../images/b4.jpg";
+	myb[5]="../images/b5.jpg";
+	myb[6]="../images/b6.jpg";
+	
+	function mybj(){
+	
+	var kkkk= document.getElementById("c1"); 
+		ib=ib+1;
+		if(ib>6)
+		ib=1;
+	kkkk.firstChild.src=myb[ib];
+}
+	
+var iy=1;
+var myy=new Array();
+myy[1]="../images/y1.png"; 
+myy[2]="../images/y2.png"; 
+myy[3]="../images/y3.png"; 
+myy[4]="../images/y4.png"; 
+myy[5]="../images/y5.png";
+myy[6]="../images/y6.png"; 
+function myhy()
+{
+var kkkk= document.getElementById("c2"); 
+iy=iy+1;
+if(iy>6)
+iy=1;
+kkkk.firstChild.src=myy[iy];
+}
+
+var it=1;			
+var myt=new Array();
+myt[1]="../images/t1.png";
+myt[2]="../images/t2.png";	 
+myt[3]="../images/t3.png"; 
+myt[4]="../images/t4.png"; 
+myt[5]="../images/t5.png";
+myt[6]="../images/t6.png"; 
+function myht()
+{
+var kkkk= document.getElementById("c3"); 
+it=it+1;
+if(it>6)
+it=1;
+kkkk.firstChild.src=myt[it];
+}	
+	
+	
+
+</script>
+
+</head>
+
+<body onLoad="MM_preloadImages('../images/an11.gif','../images/an22.gif','../images/an33.gif')">
+<div id="c0">
+  <audio autoplay loop >
+    <source src="../images/music.mp3" type="audio/mp3">
+  </audio>
+  <audio id="player">
+    <source src="../images/water.mp3" type="audio/mp3">
+  </audio>
+</div>
+<div id="c1"><img src="../images/b1.jpg" width="300" height="510" alt=""/></div>
+<div id="c2"><img src="../images/y1.png" width="300" height="510" alt=""/></div>
+<div id="c3"><img src="../images/t1.png" width="300" height="510" alt=""/></div>
+<div id="c4"><img src="../images/b.gif" width="300" height="510" alt=""/></div>
+
+
+<div id="c5"><table width="60" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td height="28"><a href="javascript:myht();" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image5','','../images/an11.gif',1)"><img src="../images/an1.gif" alt="" width="60" height="28" id="Image5"></a></td>
+    </tr>
+    <tr>
+      <td height="28"><a href="javascript:myhy();" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image6','','../images/an22.gif',1)"><img src="../images/an2.gif" alt="" width="60" height="28" id="Image6"></a></td>
+    </tr>
+    <tr>
+      <td height="28"><a href="javascript:mybj();" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image7','','../images/an33.gif',1)"><img src="../images/an3.gif" alt="" width="60" height="28" id="Image7"></a></td>
+    </tr>
+   
+  </tbody>
+</table>
+</div>
+</body>
+</html>
