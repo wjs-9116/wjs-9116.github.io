@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>云雾山中</title>
+<style type="text/css">
+	#zt{
+		position: relative;
+		width: 1000px;
+		height: 60px;	
+		top: 10px;
+		font-family: "隶书";
+		line-height: 55px;
+		font-size: 45px;
+		text-align: center;
+		background-color: #9CB5F7;
+	}
+	.cc{
+		position: absolute;
+		width: 1000px;
+		height: 600px;
+		overflow-y: hidden;
+		overflow-x: hidden;
+		top: 70px;
+	}	
+	#x1{
+		position: relative;
+		width: 4000px;
+		height: 600px;
+		z-index: 0;
+		animation: bj 20s ease 1s infinite normal forwards;
+		-webkit-animation: bj 20s ease 1s infinite normal forwards;
+	}
+	
+	@keyframes bj
+	{	
+		0% {left: 0px;}
+		24.9% {left: 0px;}
+		25% {left: -1000px;}
+		49.9% {left: -1000px;}
+		50% {left: -2000px;}
+		74.9% {left: -2000px;}
+		75% {left: -3000px;}
+		100% {left: -3000px;}	
+	}
+	@-webkit-keyframes bj
+	{	
+		0% {left: 0px;}
+		24.9% {left: 0px;}
+		25% {left: -1000px;}
+		49.9% {left: -1000px;}
+		50% {left: -2000px;}
+		74.9% {left: -2000px;}
+		75% {left: -3000px;}
+		100% {left: -3000px;}	
+	}
+	
+	
+	
+	
+	
+	
+	
+	#c1{
+		position: relative;
+		width: 2000px;
+		height: 600px;
+		z-index: 1;
+		left: 0px;		
+		animation: fog1 15s linear infinite;
+		-webkit-animation: fog1 15s linear infinite;
+	}
+	@keyframes fog1
+	{
+		0%   {left: 0px;}
+		100% {left: -1000px;}	
+	}	
+	
+	@-webkit-keyframes fog1
+	{
+		0%   {left: 0px;}
+		100% {left: -1000px;}	
+	}	
+	
+	#c2{
+		position: relative;
+		width: 2000px;
+		height: 600px;
+		z-index: 2;
+		left: -1000px;		
+		-webkit-animation: fog2 10s linear infinite;
+		animation: fog2 10s linear infinite;
+	}
+	@keyframes fog2
+	{
+		0%   {left: -1000px;}
+		100% {left: 0px;}	
+	}		
+	
+	@-webkit-keyframes fog2
+	{
+		0%   {left: -1000px;}
+		100% {left: 0px;}	
+	}	
+	
+	
+	
+	
+	
+	
+	
+	</style>
+</head>
+
+<body>
+	<div id="zt">云雾山中</div>
+	
+	<div class="cc">
+	  <div id="x1"><img src="images/bj1.jpg" width="1000" height="600" alt=""/><img src="images/bj2.jpg" width="1000" height="600" alt=""/><img src="images/bj3.jpg" width="1000" height="600" alt=""/><img src="images/bj4.jpg" width="1000" height="600" alt=""/>
+	  </div>
+    </div>
+	
+	<div class="cc">
+	  <div id="c1"><img src="images/fog-1.png" width="1000" height="600" alt=""/><img src="images/fog-1.png" width="1000" height="600" alt=""/></div>
+    </div>
+
+	<div class="cc">
+	<div id="c2"><img src="images/fog-2.png" width="1000" height="600" alt=""/><img src="images/fog-2.png" width="1000" height="600" alt=""/>
+	</div>
+	
+	</div>	
+	
+	
+
+
+</body>
+</html>
