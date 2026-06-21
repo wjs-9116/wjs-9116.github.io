@@ -1,0 +1,56 @@
+@charset "utf-8";
+#music{
+	z-index: 0;	
+	position: absolute;
+	width: 300px;	
+	left: 0px;
+	top: 80px;	
+}
+#bj{
+	z-index: 1;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 900px;
+	height: 600px;	
+}
+#zuti{
+	z-index: 2;
+	position: absolute;
+	width: 870px;
+	font-family: "隶书";
+	font-size: 36px;
+	text-align: center;
+	line-height: 60px;
+	left: 0px;
+	top: 0px;	
+	color: #fff;
+}
+#wen{
+	z-index: 2;
+	position: absolute;
+	width: 870px;
+	font-family: "隶书";
+	font-size: 24px;
+	text-align: center;
+	line-height: 40px;
+	left: 0px;
+	top: 80px;	
+	color: #E4EC62;
+}
+#y1{position: absolute;	width: 25px;height: 25px;left: 800px;top: 200px;z-index: 3;}
+#y2{position: absolute;	width: 25px;height: 25px;left: 830px;top: 300px;z-index: 3;}
+#y3{position: absolute;	width: 25px;height: 25px;left: 850px;top: 400px;z-index: 3;}
+#y4{position: absolute;	width: 25px;height: 25px;left: 870px;top: 500px;z-index: 3;}
+
+#z1{
+	position: absolute;
+	width: 25px;
+	height: 25px;
+	left: 79px;
+	top: 197px;
+	z-index: 3;
+}
+#z2{position: absolute;	width: 25px;height: 25px;left: 30px;top: 300px;z-index: 3;}
+#z3{position: absolute;	width: 25px;height: 25px;left: 50px;top: 400px;z-index: 3;}
+#z4{position: absolute;	width: 25px;height: 25px;left: 70px;top: 500px;z-index: 3;}

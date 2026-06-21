@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>球体积与表面积</title>
+<style type="text/css">
+	#button,#ball_r,#zt{
+	font-family: "楷体";
+	font-size: 18px;
+	}
+	#zhu{
+	font-size: 28px;
+	}	
+</style>
+<script type="text/javascript">
+	function mycount(){
+		var r=document.getElementById("ball_r").value;
+		var tj=document.getElementById("tj");
+		var bmj=document.getElementById("bmj");
+		
+		tj.innerHTML="球的体积是："+(Math.round(100*4*3.1415*r*r*r/3)/100);
+		
+		bmj.innerHTML="球的表面积是："+((Math.round(100*4*3.1415*r*r))/100);
+		
+	}
+	
+	
+</script>
+
+</head>
+
+<body>
+<table id="zt" width="310" border="1" align="center" cellpadding="0" cellspacing="0"> <tbody>    
+     <tr>
+      <td id="zhu" height="50" align="center" valign="middle">球体积与表面积</td>
+    </tr>
+     <tr>
+      <td height="50" align="center" valign="middle"><img src="images/ball.JPG" width="304" height="259" alt=""/></td>
+    </tr>
+    <tr>
+      <td height="50" align="center" valign="middle">
+        请输入球的半径：<input type="text" id="ball_r" size="10" maxlength="10">
+       
+      </td>
+    </tr>
+     <tr>
+      <td height="50" align="center" valign="middle"> <input name="button" type="button" id="button" onClick="mycount()" value="计算"></td>
+    </tr>
+    <tr>
+      <td id="tj" height="50" align="center" valign="middle">球的体积是：???</td>
+    </tr>
+    <tr>
+      <td id="bmj" height="50" align="center" valign="middle">球的表面积是：???</td>
+    </tr> </tbody>
+</table>
+</body>
+</html>
