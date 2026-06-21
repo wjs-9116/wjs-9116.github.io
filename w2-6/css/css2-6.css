@@ -1,0 +1,41 @@
+@charset "utf-8";
+.main{
+	width: 600px;
+	list-style-type: none;
+	background-image: url(../images/ss.jpg);
+	font-family: "隶书";
+	text-align: center;
+	color: #31E939;
+	text-shadow: 4px 4px 3px #020E00;
+}
+a:link,a:visited{
+	color: #31E939;
+	text-decoration: none;
+}
+a:active,a:hover{
+	text-decoration: none;
+}
+.bt{
+	font-size: 48px;
+	line-height: 66px;	
+}
+.wen{
+	font-size: 30px;
+	line-height: 45px;
+}
+ #zt2 {
+	position: relative;
+	
+	width: 200px;
+	height: 30px;
+	margin: 0 auto;
+	font-family: "隶书", "LiSu", serif;
+	line-height: 30px;
+	font-size: 20px;
+	text-align: center;
+	color: #fff;
+	background-color: #5F82DC;
+	z-index: 10;
+	box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+	font-weight: bold;
+    }
