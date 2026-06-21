@@ -25,10 +25,38 @@
 	
 	
 	
-	</style>
-<!--Fireworks CS6 Dreamweaver CS6 target.  Created Sun Jan 26 22:06:29 GMT+0800 2014-->
-<script language="JavaScript1.2" type="text/javascript">
-<!--
+	
+  .table-wrapper {
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+  }
+  .table-wrapper table {
+    transform-origin: top center;
+    /* 缩放比例由 JS 动态计算 */
+  }
+</style>
+
+<script>
+  function resizeTable() {
+    var wrapper = document.querySelector('.table-wrapper');
+    var table = wrapper.querySelector('table');
+    var wrapperWidth = wrapper.clientWidth;
+    var tableWidth = 640; // 表格原始宽度
+    if (wrapperWidth < tableWidth) {
+      var scale = wrapperWidth / tableWidth;
+      table.style.transform = 'scale(' + scale + ')';
+      table.style.transformOrigin = 'top center';
+      // 调整高度占位，防止下方内容被覆盖
+      table.style.marginBottom = -(table.offsetHeight * (1 - scale)) + 'px';
+    } else {
+      table.style.transform = 'scale(1)';
+      table.style.marginBottom = '0';
+    }
+  }
+  window.addEventListener('load', resizeTable);
+  window.addEventListener('resize', resizeTable);
+
 function MM_findObj(n, d) { //v4.01
   var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
     d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
@@ -54,8 +82,12 @@ function MM_preloadImages() { //v3.0
 </script>
 </head>
 <body bgcolor="#ffffff">
-<!--<table width="640" border="0" cellpadding="0" cellspacing="0" style="margin-left: auto; margin-right: auto; display: table;">-->
-<table width="100%" border="0" cellpadding="0" cellspacing="0" style="max-width: 640px; margin: 0 auto; display: table;">
+
+
+<div class="table-wrapper">
+ 
+	<table width="640" border="0" cellpadding="0" cellspacing="0" style="margin-left: auto; margin-right: auto; display: table;">
+<!--<table width="100%" border="0" cellpadding="0" cellspacing="0" style="max-width: 640px; margin: 0 auto; display: table;">-->
 <!-- fwtable fwsrc="国画切片.fw.png" fwpage="页面 1" fwbase="国画切片.gif" fwstyle="Dreamweaver" fwdocid = "1705585904" fwnested="0" -->
   <tr>
    <td><img src="images/spacer.gif" width="65" height="1" alt="" /></td>
@@ -136,6 +168,14 @@ function MM_preloadImages() { //v3.0
    <td><img src="images/spacer.gif" width="1" height="70" alt="" /></td>
   </tr>
 </table>
+	
+	
+</div>
+
+
+
+
+
 <div id="zt2"><a href="../index.html">返回</a></div> 
 </body>
 </html>
