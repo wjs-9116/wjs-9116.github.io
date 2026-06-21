@@ -2,180 +2,203 @@
 <html>
 <head>
 <title>水墨轻描</title>
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
-<style type="text/css">td img {display: block;}
-	 #zt2 {
-	position: relative;
-	width: 200px;
-	height: 30px;
-	margin: 0 auto;
-	font-family: "隶书", "LiSu", serif;
-	line-height: 30px;
-	font-size: 20px;
-	text-align: center;
-	color: #fff;
-	background-color: #5F82DC;
-	z-index: 10;
-	box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-	font-weight: bold;
-		
-	}
-	
-	
-	
-	
+
+<style type="text/css">
+  /* 表格容器 - 用于居中 */
   .table-wrapper {
-    overflow: hidden;
     display: flex;
     justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    overflow: hidden;
   }
-  .table-wrapper table {
+  
+  /* 表格本身 */
+  #main-table {
+    width: 640px;  /* 原始设计宽度 */
+    border: 0;
+    cellpadding: 0;
+    cellspacing: 0;
+    /* 缩放由 JS 控制 */
     transform-origin: top center;
-    /* 缩放比例由 JS 动态计算 */
+  }
+
+  /* 你的原有样式 */
+  td img {
+    display: block;
+  }
+  
+  #zt2 {
+    position: relative;
+    width: 200px;
+    height: 30px;
+    margin: 20px auto;
+    font-family: "隶书", "LiSu", serif;
+    line-height: 30px;
+    font-size: 20px;
+    text-align: center;
+    color: #fff;
+    background-color: #5F82DC;
+    z-index: 10;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    font-weight: bold;
+  }
+  
+  #zt2 a {
+    color: #fff;
+    text-decoration: none;
   }
 </style>
 
-<script>
-  function resizeTable() {
-    var wrapper = document.querySelector('.table-wrapper');
-    var table = wrapper.querySelector('table');
-    var wrapperWidth = wrapper.clientWidth;
-    var tableWidth = 640; // 表格原始宽度
-    if (wrapperWidth < tableWidth) {
-      var scale = wrapperWidth / tableWidth;
-      table.style.transform = 'scale(' + scale + ')';
-      table.style.transformOrigin = 'top center';
-      // 调整高度占位，防止下方内容被覆盖
-      table.style.marginBottom = -(table.offsetHeight * (1 - scale)) + 'px';
-    } else {
-      table.style.transform = 'scale(1)';
-      table.style.marginBottom = '0';
-    }
-  }
-  window.addEventListener('load', resizeTable);
-  window.addEventListener('resize', resizeTable);
-
-function MM_findObj(n, d) { //v4.01
+<!-- 你的原有 JS 函数 -->
+<script language="JavaScript1.2" type="text/javascript">
+function MM_findObj(n, d) {
   var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
     d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
   if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
   for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
   if(!x && d.getElementById) x=d.getElementById(n); return x;
 }
-function MM_swapImage() { //v3.0
+function MM_swapImage() {
   var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
    if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
 }
-function MM_swapImgRestore() { //v3.0
+function MM_swapImgRestore() {
   var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
 }
-
-function MM_preloadImages() { //v3.0
+function MM_preloadImages() {
   var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
     var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
     if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
 }
-
-//-->
 </script>
+
+<!-- 新增：表格缩放 JS -->
+<script>
+function scaleTable() {
+  var wrapper = document.querySelector('.table-wrapper');
+  var table = document.getElementById('main-table');
+  
+  if (!wrapper || !table) return;
+  
+  var wrapperWidth = wrapper.clientWidth;  // 容器实际宽度
+  var tableWidth = 640;  // 表格原始宽度
+  
+  // 如果容器宽度小于表格宽度，进行缩放
+  if (wrapperWidth < tableWidth) {
+    var scale = wrapperWidth / tableWidth;
+    table.style.transform = 'scale(' + scale + ')';
+    table.style.transformOrigin = 'top center';
+    // 关键：缩放后要调整占位高度，防止下方内容被遮挡
+    var scaledHeight = table.offsetHeight * scale;
+    table.style.marginBottom = -(table.offsetHeight - scaledHeight) + 'px';
+  } else {
+    table.style.transform = 'scale(1)';
+    table.style.marginBottom = '0';
+  }
+}
+
+// 页面加载完成和窗口变化时执行
+window.addEventListener('load', scaleTable);
+window.addEventListener('resize', scaleTable);
+// 如果图片加载会影响布局，也重新计算
+window.addEventListener('DOMContentLoaded', function() {
+  setTimeout(scaleTable, 100);
+});
+</script>
+
 </head>
+
 <body bgcolor="#ffffff">
 
-
+<!-- 表格容器 -->
 <div class="table-wrapper">
- 
-	<table width="640" border="0" cellpadding="0" cellspacing="0" style="margin-left: auto; margin-right: auto; display: table;">
-<!--<table width="100%" border="0" cellpadding="0" cellspacing="0" style="max-width: 640px; margin: 0 auto; display: table;">-->
-<!-- fwtable fwsrc="国画切片.fw.png" fwpage="页面 1" fwbase="国画切片.gif" fwstyle="Dreamweaver" fwdocid = "1705585904" fwnested="0" -->
-  <tr>
-   <td><img src="images/spacer.gif" width="65" height="1" alt="" /></td>
-   <td><img src="images/spacer.gif" width="15" height="1" alt="" /></td>
-   <td><img src="images/spacer.gif" width="15" height="1" alt="" /></td>
-   <td><img src="images/spacer.gif" width="47" height="1" alt="" /></td>
-   <td><img src="images/spacer.gif" width="13" height="1" alt="" /></td>
-   <td><img src="images/spacer.gif" width="15" height="1" alt="" /></td>
-   <td><img src="images/spacer.gif" width="15" height="1" alt="" /></td>
-   <td><img src="images/spacer.gif" width="47" height="1" alt="" /></td>
-   <td><img src="images/spacer.gif" width="9" height="1" alt="" /></td>
-   <td><img src="images/spacer.gif" width="312" height="1" alt="" /></td>
-   <td><img src="images/spacer.gif" width="87" height="1" alt="" /></td>
-   <td><img src="images/spacer.gif" width="1" height="1" alt="" /></td>
-  </tr>
-
-  <tr>
-   <td rowspan="2" colspan="4"><img name="n_r1_c1" src="images/国画切片_r1_c1.gif" width="142" height="75" id="n_r1_c1" alt="" /></td>
-   <td colspan="4"><a  onmouseout="MM_swapImgRestore();" onmouseover="MM_swapImage('qq','','images/z11.jpg',1);"><img name="q1" src="images/q1.gif" width="90" height="70" id="q1" alt="" /></a></td>
-   <td rowspan="3" colspan="3"><img name="n_r1_c9" src="images/国画切片_r1_c9.gif" width="408" height="128" id="n_r1_c9" alt="" /></td>
-   <td><img src="images/spacer.gif" width="1" height="70" alt="" /></td>
-  </tr>
-  <tr>
-   <td colspan="4"><img name="n_r2_c5" src="images/国画切片_r2_c5.gif" width="90" height="5" id="n_r2_c5" alt="" /></td>
-   <td><img src="images/spacer.gif" width="1" height="5" alt="" /></td>
-  </tr>
-  <tr>
-   <td rowspan="3" colspan="3"><img name="n_r3_c1" src="images/国画切片_r3_c1.gif" width="95" height="79" id="n_r3_c1" alt="" /></td>
-   <td rowspan="2" colspan="4"><a  onmouseout="MM_swapImgRestore();" onmouseover="MM_swapImage('qq','','images/z22.jpg',1);"><img name="q2" src="images/q2.gif" width="90" height="70" id="q2" alt="" /></a></td>
-   <td rowspan="10"><img name="n_r3_c8" src="images/国画切片_r3_c8.gif" width="47" height="335" id="n_r3_c8" alt="" /></td>
-   <td><img src="images/spacer.gif" width="1" height="53" alt="" /></td>
-  </tr>
-  <tr>
-   <td rowspan="10"><img name="n_r4_c9" src="images/国画切片_r4_c9.gif" width="9" height="352" id="n_r4_c9" alt="" /></td>
-   <td rowspan="7"><img name="qq" src="images/qq.gif" width="312" height="225" id="qq" alt="" /></td>
-   <td rowspan="10"><img name="n_r4_c11" src="images/国画切片_r4_c11.gif" width="87" height="352" id="n_r4_c11" alt="" /></td>
-   <td><img src="images/spacer.gif" width="1" height="17" alt="" /></td>
-  </tr>
-  <tr>
-   <td colspan="4"><img name="n_r5_c4" src="images/国画切片_r5_c4.gif" width="90" height="9" id="n_r5_c4" alt="" /></td>
-   <td><img src="images/spacer.gif" width="1" height="9" alt="" /></td>
-  </tr>
-  <tr>
-   <td rowspan="8"><img name="n_r6_c1" src="images/国画切片_r6_c1.gif" width="65" height="326" id="n_r6_c1" alt="" /></td>
-   <td colspan="4"><a  onmouseout="MM_swapImgRestore();" onmouseover="MM_swapImage('qq','','images/z33.jpg',1);"><img name="q3" src="images/q3.gif" width="90" height="70" id="q3" alt="" /></a></td>
-   <td rowspan="4" colspan="2"><img name="n_r6_c6" src="images/国画切片_r6_c6.gif" width="30" height="180" id="n_r6_c6" alt="" /></td>
-   <td><img src="images/spacer.gif" width="1" height="70" alt="" /></td>
-  </tr>
-  <tr>
-   <td colspan="4"><img name="n_r7_c2" src="images/国画切片_r7_c2.gif" width="90" height="21" id="n_r7_c2" alt="" /></td>
-   <td><img src="images/spacer.gif" width="1" height="21" alt="" /></td>
-  </tr>
-  <tr>
-   <td colspan="4"><a  onmouseout="MM_swapImgRestore();" onmouseover="MM_swapImage('qq','','images/z44.jpg',1);"><img name="q4" src="images/q4.gif" width="90" height="70" id="q4" alt="" /></a></td>
-   <td><img src="images/spacer.gif" width="1" height="70" alt="" /></td>
-  </tr>
-  <tr>
-   <td colspan="4"><img name="n_r9_c2" src="images/国画切片_r9_c2.gif" width="90" height="19" id="n_r9_c2" alt="" /></td>
-   <td><img src="images/spacer.gif" width="1" height="19" alt="" /></td>
-  </tr>
-  <tr>
-   <td rowspan="4"><img name="n_r10_c2" src="images/国画切片_r10_c2.gif" width="15" height="146" id="n_r10_c2" alt="" /></td>
-   <td rowspan="2" colspan="4"><a  onmouseout="MM_swapImgRestore();" onmouseover="MM_swapImage('qq','','images/z55.jpg',1);"><img name="q5" src="images/q5.gif" width="90" height="70" id="q5" alt="" /></a></td>
-   <td rowspan="3"><img name="n_r10_c7" src="images/国画切片_r10_c7.gif" width="15" height="76" id="n_r10_c7" alt="" /></td>
-   <td><img src="images/spacer.gif" width="1" height="19" alt="" /></td>
-  </tr>
-  <tr>
-   <td rowspan="3"><img name="n_r11_c10" src="images/国画切片_r11_c10.gif" width="312" height="127" id="n_r11_c10" alt="" /></td>
-   <td><img src="images/spacer.gif" width="1" height="51" alt="" /></td>
-  </tr>
-  <tr>
-   <td colspan="4"><img name="n_r12_c3" src="images/国画切片_r12_c3.gif" width="90" height="6" id="n_r12_c3" alt="" /></td>
-   <td><img src="images/spacer.gif" width="1" height="6" alt="" /></td>
-  </tr>
-  <tr>
-   <td colspan="2"><img name="n_r13_c3" src="images/国画切片_r13_c3.gif" width="62" height="70" id="n_r13_c3" alt="" /></td>
-   <td colspan="4"><a  onmouseout="MM_swapImgRestore();" onmouseover="MM_swapImage('qq','','images/z66.jpg',1);"><img name="q6" src="images/q6.gif" width="90" height="70" id="q6" alt="" /></a></td>
-   <td><img src="images/spacer.gif" width="1" height="70" alt="" /></td>
-  </tr>
-</table>
-	
-	
+  <table id="main-table" width="640" border="0" cellpadding="0" cellspacing="0">
+    <!-- 你的原有表格内容，完全不变 -->
+    <tr>
+      <td><img src="images/spacer.gif" width="65" height="1" alt="" /></td>
+      <td><img src="images/spacer.gif" width="15" height="1" alt="" /></td>
+      <td><img src="images/spacer.gif" width="15" height="1" alt="" /></td>
+      <td><img src="images/spacer.gif" width="47" height="1" alt="" /></td>
+      <td><img src="images/spacer.gif" width="13" height="1" alt="" /></td>
+      <td><img src="images/spacer.gif" width="15" height="1" alt="" /></td>
+      <td><img src="images/spacer.gif" width="15" height="1" alt="" /></td>
+      <td><img src="images/spacer.gif" width="47" height="1" alt="" /></td>
+      <td><img src="images/spacer.gif" width="9" height="1" alt="" /></td>
+      <td><img src="images/spacer.gif" width="312" height="1" alt="" /></td>
+      <td><img src="images/spacer.gif" width="87" height="1" alt="" /></td>
+      <td><img src="images/spacer.gif" width="1" height="1" alt="" /></td>
+    </tr>
+    <tr>
+      <td rowspan="2" colspan="4"><img name="n_r1_c1" src="images/国画切片_r1_c1.gif" width="142" height="75" id="n_r1_c1" alt="" /></td>
+      <td colspan="4"><a onmouseout="MM_swapImgRestore();" onmouseover="MM_swapImage('qq','','images/z11.jpg',1);"><img name="q1" src="images/q1.gif" width="90" height="70" id="q1" alt="" /></a></td>
+      <td rowspan="3" colspan="3"><img name="n_r1_c9" src="images/国画切片_r1_c9.gif" width="408" height="128" id="n_r1_c9" alt="" /></td>
+      <td><img src="images/spacer.gif" width="1" height="70" alt="" /></td>
+    </tr>
+    <tr>
+      <td colspan="4"><img name="n_r2_c5" src="images/国画切片_r2_c5.gif" width="90" height="5" id="n_r2_c5" alt="" /></td>
+      <td><img src="images/spacer.gif" width="1" height="5" alt="" /></td>
+    </tr>
+    <tr>
+      <td rowspan="3" colspan="3"><img name="n_r3_c1" src="images/国画切片_r3_c1.gif" width="95" height="79" id="n_r3_c1" alt="" /></td>
+      <td rowspan="2" colspan="4"><a onmouseout="MM_swapImgRestore();" onmouseover="MM_swapImage('qq','','images/z22.jpg',1);"><img name="q2" src="images/q2.gif" width="90" height="70" id="q2" alt="" /></a></td>
+      <td rowspan="10"><img name="n_r3_c8" src="images/国画切片_r3_c8.gif" width="47" height="335" id="n_r3_c8" alt="" /></td>
+      <td><img src="images/spacer.gif" width="1" height="53" alt="" /></td>
+    </tr>
+    <tr>
+      <td rowspan="10"><img name="n_r4_c9" src="images/国画切片_r4_c9.gif" width="9" height="352" id="n_r4_c9" alt="" /></td>
+      <td rowspan="7"><img name="qq" src="images/qq.gif" width="312" height="225" id="qq" alt="" /></td>
+      <td rowspan="10"><img name="n_r4_c11" src="images/国画切片_r4_c11.gif" width="87" height="352" id="n_r4_c11" alt="" /></td>
+      <td><img src="images/spacer.gif" width="1" height="17" alt="" /></td>
+    </tr>
+    <tr>
+      <td colspan="4"><img name="n_r5_c4" src="images/国画切片_r5_c4.gif" width="90" height="9" id="n_r5_c4" alt="" /></td>
+      <td><img src="images/spacer.gif" width="1" height="9" alt="" /></td>
+    </tr>
+    <tr>
+      <td rowspan="8"><img name="n_r6_c1" src="images/国画切片_r6_c1.gif" width="65" height="326" id="n_r6_c1" alt="" /></td>
+      <td colspan="4"><a onmouseout="MM_swapImgRestore();" onmouseover="MM_swapImage('qq','','images/z33.jpg',1);"><img name="q3" src="images/q3.gif" width="90" height="70" id="q3" alt="" /></a></td>
+      <td rowspan="4" colspan="2"><img name="n_r6_c6" src="images/国画切片_r6_c6.gif" width="30" height="180" id="n_r6_c6" alt="" /></td>
+      <td><img src="images/spacer.gif" width="1" height="70" alt="" /></td>
+    </tr>
+    <tr>
+      <td colspan="4"><img name="n_r7_c2" src="images/国画切片_r7_c2.gif" width="90" height="21" id="n_r7_c2" alt="" /></td>
+      <td><img src="images/spacer.gif" width="1" height="21" alt="" /></td>
+    </tr>
+    <tr>
+      <td colspan="4"><a onmouseout="MM_swapImgRestore();" onmouseover="MM_swapImage('qq','','images/z44.jpg',1);"><img name="q4" src="images/q4.gif" width="90" height="70" id="q4" alt="" /></a></td>
+      <td><img src="images/spacer.gif" width="1" height="70" alt="" /></td>
+    </tr>
+    <tr>
+      <td colspan="4"><img name="n_r9_c2" src="images/国画切片_r9_c2.gif" width="90" height="19" id="n_r9_c2" alt="" /></td>
+      <td><img src="images/spacer.gif" width="1" height="19" alt="" /></td>
+    </tr>
+    <tr>
+      <td rowspan="4"><img name="n_r10_c2" src="images/国画切片_r10_c2.gif" width="15" height="146" id="n_r10_c2" alt="" /></td>
+      <td rowspan="2" colspan="4"><a onmouseout="MM_swapImgRestore();" onmouseover="MM_swapImage('qq','','images/z55.jpg',1);"><img name="q5" src="images/q5.gif" width="90" height="70" id="q5" alt="" /></a></td>
+      <td rowspan="3"><img name="n_r10_c7" src="images/国画切片_r10_c7.gif" width="15" height="76" id="n_r10_c7" alt="" /></td>
+      <td><img src="images/spacer.gif" width="1" height="19" alt="" /></td>
+    </tr>
+    <tr>
+      <td rowspan="3"><img name="n_r11_c10" src="images/国画切片_r11_c10.gif" width="312" height="127" id="n_r11_c10" alt="" /></td>
+      <td><img src="images/spacer.gif" width="1" height="51" alt="" /></td>
+    </tr>
+    <tr>
+      <td colspan="4"><img name="n_r12_c3" src="images/国画切片_r12_c3.gif" width="90" height="6" id="n_r12_c3" alt="" /></td>
+      <td><img src="images/spacer.gif" width="1" height="6" alt="" /></td>
+    </tr>
+    <tr>
+      <td colspan="2"><img name="n_r13_c3" src="images/国画切片_r13_c3.gif" width="62" height="70" id="n_r13_c3" alt="" /></td>
+      <td colspan="4"><a onmouseout="MM_swapImgRestore();" onmouseover="MM_swapImage('qq','','images/z66.jpg',1);"><img name="q6" src="images/q6.gif" width="90" height="70" id="q6" alt="" /></a></td>
+      <td><img src="images/spacer.gif" width="1" height="70" alt="" /></td>
+    </tr>
+  </table>
 </div>
 
+<!-- "返回"按钮放在表格外面，不受缩放影响 -->
+<div id="zt2"><a href="../index.html">返回</a></div>
 
-
-
-
-<div id="zt2"><a href="../index.html">返回</a></div> 
 </body>
 </html>
