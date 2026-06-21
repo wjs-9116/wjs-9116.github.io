@@ -5,6 +5,7 @@
 <meta charset="utf-8">
 <title>老君山游记</title>
 <link href="css/css2-6.css" rel="stylesheet" type="text/css">
+
 </head>
 
 <body>
@@ -13,7 +14,7 @@
 	<li class="wen"><a href="files/s1.html" target="my">丹霞地貌</a>　<a href="files/s2.html" target="my">篝火晚会</a>　<a href="files/s3.html" target="my">观景台</a>　<a href="files/s4.html" target="my">猴子</a></li>
   <li><iframe name="my" scrolling="no" height="340" width="500" src="files/s1.html"></iframe></li>
 	<li>      
-      <audio autoplay loop muted>
+      <audio autoplay loop>
   <source src="images/bj.mp3" type="audio/mp3">
 </audio>
       <div id="zt2"><a href="../index.html">返回</a></div> 
@@ -23,6 +24,16 @@
 	
 	
 </div>
-
+<script>
+  // 获取音频元素
+  var audio = document.querySelector('audio');
+  
+  // 当用户第一次点击页面任何地方时，播放音频
+  document.addEventListener('click', function() {
+    if (audio.paused) {
+      audio.play();
+    }
+  }, { once: true }); // { once: true } 表示只触发一次
+</script>
 </body>
 </html>
