@@ -68,7 +68,7 @@
         object-fit: cover;
     }
     
-    /* ===== 轮播动画（淡入淡出） ===== */
+    /* ===== 轮播动画 ===== */
     @keyframes slideshow {
         0%   { opacity: 0; }
         5%   { opacity: 1; }
@@ -89,7 +89,7 @@
         z-index: 5;
     }
     
-    /* ===== 第一层云雾（下层，慢速） ===== */
+    /* ===== 第一层云雾（桌面端） ===== */
     #c1 {
         position: absolute;
         top: 0;
@@ -97,7 +97,7 @@
         width: 2000px;
         height: 600px;
         background: url('images/fog-1.png') repeat-x;
-        background-size: 1000px 600px;  /* ✅ 确保平铺尺寸正确 */
+        background-size: 1000px 600px;
         will-change: transform;
         animation: fog1 15s linear infinite;
         z-index: 1;
@@ -108,7 +108,7 @@
         100% { transform: translateX(-1000px); }
     }
     
-    /* ===== 第二层云雾（上层，快速） ===== */
+    /* ===== 第二层云雾（桌面端） ===== */
     #c2 {
         position: absolute;
         top: 0;
@@ -116,7 +116,7 @@
         width: 2000px;
         height: 600px;
         background: url('images/fog-2.png') repeat-x;
-        background-size: 1000px 600px;  /* ✅ 确保平铺尺寸正确 */
+        background-size: 1000px 600px;
         will-change: transform;
         animation: fog2 10s linear infinite;
         z-index: 2;
@@ -150,7 +150,9 @@
         display: block;
     }
     
-    /* ===== 响应式适配 ===== */
+    /* ============================================ */
+    /* ===== 响应式适配（核心修复） ===== */
+    /* ============================================ */
     @media (max-width: 1024px) {
         #zt,
         #zt2,
@@ -166,12 +168,37 @@
             aspect-ratio: 1000 / 600;
         }
         
-        /* ✅ 关键修复：云雾背景自适应 */
-        #c1, #c2 {
-            width: 200%;
+        #x1, #x2, #x3, #x4 {
             height: 100%;
-            background-size: 50% 100%;  /* 使用百分比，确保平铺 */
+        }
+        
+        /* ✅ 核心修复：使用 vw 单位适配移动端 */
+        #c1, #c2 {
+            width: 200vw;              /* 宽度为视口宽度的2倍 */
+            height: 100%;
+            background-size: 100vw 100%;  /* 每个背景图宽度 = 视口宽度 */
             background-repeat: repeat-x;
+            background-position: 0 0;
+        }
+        
+        /* 覆盖桌面端动画 */
+        #c1 {
+            animation: fog1-mobile 15s linear infinite;
+        }
+        
+        @keyframes fog1-mobile {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-100vw); }
+        }
+        
+        #c2 {
+            animation: fog2-mobile 10s linear infinite;
+            transform: translateX(-100vw);
+        }
+        
+        @keyframes fog2-mobile {
+            0%   { transform: translateX(-100vw); }
+            100% { transform: translateX(0); }
         }
     }
     
@@ -194,11 +221,6 @@
         
         #x1, #x2, #x3, #x4 {
             height: 100%;
-        }
-        
-        /* 小屏幕同样保持平铺 */
-        #c1, #c2 {
-            background-size: 50% 100%;
         }
     }
 </style>
