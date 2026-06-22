@@ -65,15 +65,15 @@
         display: block;
         width: 1000px;
         height: 600px;
-        object-fit: cover;  /* 保持比例，裁剪填充 */
+        object-fit: cover;
     }
     
     /* ===== 轮播动画（淡入淡出） ===== */
     @keyframes slideshow {
         0%   { opacity: 0; }
-        5%   { opacity: 1; }   /* 0.6秒淡入 */
-        25%  { opacity: 1; }   /* 保持显示到3秒 */
-        30%  { opacity: 0; }   /* 0.6秒淡出 */
+        5%   { opacity: 1; }
+        25%  { opacity: 1; }
+        30%  { opacity: 0; }
         100% { opacity: 0; }
     }
     
@@ -85,8 +85,8 @@
         width: 1000px;
         height: 600px;
         overflow: hidden;
-        pointer-events: none;  /* 允许点击穿透到下方图片 */
-        z-index: 5;           /* 在图片上方 */
+        pointer-events: none;
+        z-index: 5;
     }
     
     /* ===== 第一层云雾（下层，慢速） ===== */
@@ -96,15 +96,9 @@
         left: 0;
         width: 2000px;
         height: 600px;
-       
-		 background: url('images/fog-1.png') repeat-x;
-		will-change: transform;
-                  /*opacity: 0.7;半透明效果 
-		
-		
-		
-		*/
-         
+        background: url('images/fog-1.png') repeat-x;
+        background-size: 1000px 600px;  /* ✅ 确保平铺尺寸正确 */
+        will-change: transform;
         animation: fog1 15s linear infinite;
         z-index: 1;
     }
@@ -115,58 +109,51 @@
     }
     
     /* ===== 第二层云雾（上层，快速） ===== */
-    
-	#c2 {
-    position: absolute;
-    top: 0;
-    left:0;
-    width: 2000px;
-    height: 600px;
-    background: url('images/fog-2.png') repeat-x;
-    will-change: transform;
-    animation: fog2 10s linear infinite;
-    z-index: 2;
-   transform: translateX(-1000px);
-		
-		/* opacity: 0.5;
-    关键：起点设置在画布中间位置 
-		
-		
-		
-		*/
-    
-}
-
-@keyframes fog2 {
-    0%   { transform: translateX(-1000px); }  /* 从中间开始，无边缘线 */
-    100% { transform: translateX(0px); }      /* 向左平滑移动 */
-}
-	
-	
-	 #zt2 {
-	position: relative;
-	width: 500px;
-	height: 40px;
-	margin: 0 auto;
-	font-family: "隶书", "LiSu", serif;
-	line-height: 40px;
-	font-size: 30px;
-	text-align: center;
-	color: #fff;
-	background-color: #5F82DC;
-	z-index: 10;
-	box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    #c2 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 2000px;
+        height: 600px;
+        background: url('images/fog-2.png') repeat-x;
+        background-size: 1000px 600px;  /* ✅ 确保平铺尺寸正确 */
+        will-change: transform;
+        animation: fog2 10s linear infinite;
+        z-index: 2;
+        transform: translateX(-1000px);
     }
-	
-	
-	
-	
-	
+    
+    @keyframes fog2 {
+        0%   { transform: translateX(-1000px); }
+        100% { transform: translateX(0px); }
+    }
+    
+    /* ===== 返回按钮 ===== */
+    #zt2 {
+        position: relative;
+        width: 500px;
+        height: 40px;
+        margin: 0 auto;
+        font-family: "隶书", "LiSu", serif;
+        line-height: 40px;
+        font-size: 30px;
+        text-align: center;
+        color: #fff;
+        background-color: #5F82DC;
+        z-index: 10;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    
+    #zt2 a {
+        color: #fff;
+        text-decoration: none;
+        display: block;
+    }
     
     /* ===== 响应式适配 ===== */
     @media (max-width: 1024px) {
         #zt,
-		#zt2,
+        #zt2,
         .slider-wrapper,
         .fog-wrapper {
             width: 100%;
@@ -179,10 +166,12 @@
             aspect-ratio: 1000 / 600;
         }
         
+        /* ✅ 关键修复：云雾背景自适应 */
         #c1, #c2 {
             width: 200%;
             height: 100%;
-            background-size: auto 100%;
+            background-size: 50% 100%;  /* 使用百分比，确保平铺 */
+            background-repeat: repeat-x;
         }
     }
     
@@ -196,6 +185,7 @@
             font-size: 18px;
             height: 30px;
             line-height: 30px;
+            width: 200px;
         }
         .slider-wrapper {
             height: auto;
@@ -205,13 +195,13 @@
         #x1, #x2, #x3, #x4 {
             height: 100%;
         }
+        
+        /* 小屏幕同样保持平铺 */
+        #c1, #c2 {
+            background-size: 50% 100%;
+        }
     }
-
-	
-	
-	
-	
-	</style>
+</style>
 </head>
 
 <body>
@@ -226,16 +216,13 @@
         <div id="x3"><img src="images/bj3.jpg" alt="风景3" loading="lazy"/></div>
         <div id="x4"><img src="images/bj4.jpg" alt="风景4" loading="lazy"/></div>
         
-        <!-- 云雾层（覆盖在图片上方） -->
+        <!-- 云雾层 -->
         <div class="fog-wrapper">
             <div id="c1"></div>
             <div id="c2"></div>
         </div>
-    
-    
-    
     </div>
-   <div id="zt2"><a href="../index.html">返回</a></div>  
     
+    <div id="zt2"><a href="../index.html">返回</a></div>
 </body>
 </html>
