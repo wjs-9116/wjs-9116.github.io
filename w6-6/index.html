@@ -96,8 +96,14 @@
         left: 0;
         width: 2000px;
         height: 600px;
-        background: url('images/fog-1.png') repeat-x;
-                  /*opacity: 0.7;will-change: transform;半透明效果 */
+       
+		 background: url('images/fog-1.png') repeat-x;
+		will-change: transform;
+                  /*opacity: 0.7;半透明效果 
+		
+		
+		
+		*/
          
         animation: fog1 15s linear infinite;
         z-index: 1;
@@ -117,12 +123,18 @@
     width: 2000px;
     height: 600px;
     background: url('images/fog-2.png') repeat-x;
-    
+    will-change: transform;
     animation: fog2 10s linear infinite;
     z-index: 2;
-    /* opacity: 0.5;
-    will-change: transform;transform: 关键：起点设置在画布中间位置 */
-    translateX(-1000px);
+   transform: translateX(-1000px);
+		
+		/* opacity: 0.5;
+    关键：起点设置在画布中间位置 
+		
+		
+		
+		*/
+    
 }
 
 @keyframes fog2 {
