@@ -120,7 +120,6 @@
         will-change: transform;
         animation: fog2 10s linear infinite;
         z-index: 2;
-        transform: translateX(-1000px);
     }
     
     @keyframes fog2 {
@@ -151,54 +150,63 @@
     }
     
     /* ============================================ */
-    /* ===== 响应式适配（核心修复） ===== */
+    /* ===== 响应式适配（彻底修复版） ===== */
     /* ============================================ */
     @media (max-width: 1024px) {
-        #zt,
-        #zt2,
+        #zt {
+            width: 100%;
+        }
+        
+        #zt2 {
+            width: 80%;
+            max-width: 500px;
+        }
+        
         .slider-wrapper,
         .fog-wrapper {
             width: 100%;
-        }
-        
-        #x1, #x2, #x3, #x4,
-        #x1 img, #x2 img, #x3 img, #x4 img {
-            width: 100%;
-            height: auto;
-            aspect-ratio: 1000 / 600;
+            height: auto;  /* ✅ 高度自适应 */
+            aspect-ratio: 1000 / 600;  /* ✅ 保持宽高比 */
         }
         
         #x1, #x2, #x3, #x4 {
+            width: 100%;
             height: 100%;
         }
         
-        /* ✅ 核心修复：使用 vw 单位适配移动端 */
-        #c1, #c2 {
-            width: 200vw;              /* 宽度为视口宽度的2倍 */
+        #x1 img, #x2 img, #x3 img, #x4 img {
+            width: 100%;
             height: 100%;
-            background-size: 100vw 100%;  /* 每个背景图宽度 = 视口宽度 */
+            object-fit: cover;
+        }
+        
+        /* ✅ 核心修复：使用百分比，适配任意屏幕 */
+        #c1, #c2 {
+            width: 200%;              /* 容器宽度的2倍 */
+            height: 100%;
+            background-size: 50% 100%;  /* 每个背景图 = 容器宽度的50% */
             background-repeat: repeat-x;
             background-position: 0 0;
         }
         
-        /* 覆盖桌面端动画 */
+        /* ✅ 重新定义移动端动画，移除 transform 重复 */
         #c1 {
             animation: fog1-mobile 15s linear infinite;
         }
         
         @keyframes fog1-mobile {
             0%   { transform: translateX(0); }
-            100% { transform: translateX(-100vw); }
+            100% { transform: translateX(-50%); }  /* 移动容器宽度的50% */
         }
         
         #c2 {
             animation: fog2-mobile 10s linear infinite;
-            transform: translateX(-100vw);
+            /* ✅ 移除元素样式中的 transform，避免冲突 */
         }
         
         @keyframes fog2-mobile {
-            0%   { transform: translateX(-100vw); }
-            100% { transform: translateX(0); }
+            0%   { transform: translateX(-50%); }
+            100% { transform: translateX(0%); }
         }
     }
     
@@ -208,19 +216,16 @@
             height: 50px;
             line-height: 50px;
         }
+        
         #zt2 {
             font-size: 18px;
             height: 30px;
             line-height: 30px;
-            width: 200px;
-        }
-        .slider-wrapper {
-            height: auto;
-            aspect-ratio: 1000 / 600;
         }
         
-        #x1, #x2, #x3, #x4 {
-            height: 100%;
+        .slider-wrapper,
+        .fog-wrapper {
+            aspect-ratio: 1000 / 600;
         }
     }
 </style>
