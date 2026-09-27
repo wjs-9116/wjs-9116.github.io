@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>奔跑吧！</title>
+    <style>        
+        div{  
+           width: 900px;
+           margin: 0 auto;
+           position: relative;            
+        }
+        .wz{                               
+            font-family: "楷体";            
+            text-align: center;           
+            font-weight: bold;       
+            color: lab(92.97% -15.95 55.84 / 0.664);           
+        }
+        #wz1{                       
+            font-size: 50px;
+            line-height: 80px;            
+        }
+        #wz2{        
+            font-size: 30px;
+            line-height: 45px;            
+        }
+        #cat{
+            position: absolute;
+            left: 840px;
+            top: 260px;            
+            animation: cat_run 20s linear 2s infinite normal none;
+        }
+        @keyframes cat_run
+{
+	0%   {left: 840px;transform: scaleX(1);}	
+	50%  {left: 0px;transform: scaleX(1);}
+    51%  {left: 0px;transform: scaleX(-1);}
+	100%  {left: 840px;transform: scaleX(-1);}	
+}
+
+        #dog{
+            position: absolute;
+            left: 840px;
+            top: 430px;            
+            animation: dog_run 19s linear 2s infinite normal none;
+
+        }
+ @keyframes dog_run
+{
+	0%   {left: 840px;transform: scaleX(1);}	
+	50%  {left: 0px;transform: scaleX(1);}
+    51%  {left: 0px;transform: scaleX(-1);}
+	100%  {left: 840px;transform: scaleX(-1);}	
+}
+
+
+
+
+    </style>
+</head>
+<body>
+    <div>
+    <table class="wz"  border="0" cellspacing="0" cellpadding="0" background="images/bj1.gif" width="900" align="center">
+        <tr>
+            <td id="wz1" align="center" height="100">奔跑吧！</td>
+        </tr>
+        <tr>
+            <td id="wz2" align="center" height="70">阿猫、阿狗之间的距离是这样拉开的。</td>
+        </tr>
+        <tr>
+            <td align="center" height="50" style="vertical-align: bottom;"><img src="images/mt1.gif" height="30px">　　　　<img src="images/mt1.gif" height="20px"><img src="images/mt1.gif" height="20px">　　　<img src="images/mt1.gif" height="30px">　　　　<img src="images/mt1.gif" height="20px"><img src="images/mt1.gif" height="20px"><img src="images/mt1.gif" height="30px"></td>
+        </tr>
+        <tr>
+            <td align="center" height="130" background="images/bj2.gif"></td>
+        </tr>
+        <tr>
+            <td align="center" height="40"><img src="images/mt2.gif" height="40px">　　　　　　　　　<img src="images/mt2.gif" height="40px">　　　<img src="images/mt1.gif" height="40px"><img src="images/mt1.gif" height="20px"></td>
+        </tr>
+        <tr>
+            <td align="center" height="130" background="images/bj2.gif"></td>
+        </tr>
+        <tr>
+            <td align="center" height="100" style="vertical-align: top;"><img src="images/mt2.gif" height="50px">　　　　　　　　<img src="images/mt2.gif" height="50px"><img src="images/mt2.gif" height="50px"></td>
+        </tr>
+    </table>
+    
+        <img id="cat" src="images/阿猫.gif" alt="">
+        <img id="dog" src="images/阿狗.gif" alt="">
+    </div>
+</body>
+</html>

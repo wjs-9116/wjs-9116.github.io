@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>  
+    <style>
+        div{             
+            width: 600px; 
+            margin: auto;           
+            background-color: hsl(61, 62%, 85%);
+        }
+        #zt{                               
+            text-align: center;
+            font-family: "微软雅黑";
+            font-weight: bold;
+            font-size: 30px;
+            line-height: 60px;
+            color: hsl(313, 100%, 50%);
+        }
+        #wz{         
+            text-indent: 40px;
+            font-family: "微软雅黑";            
+            font-size: 20px;
+            line-height: 30px;
+            color: lab(18.11% 47.19 -56.68 / 0.664);
+        }
+        .slider {
+            position: relative;           
+            height: 400px; 
+        }
+        img {
+            position: absolute;
+            width: 100%;
+            height:100%;            
+            opacity: 0;            
+            /* 动画：14秒一个周期，无限循环 */
+            animation: showHide 14s infinite;
+        }
+        /*每张图片延迟不同时间 */
+        .slider img:nth-child(1) { animation-delay: 0s; }
+        .slider img:nth-child(2) { animation-delay: 2s; }
+        .slider img:nth-child(3) { animation-delay: 4s; }
+        .slider img:nth-child(4) { animation-delay: 6s; }
+        .slider img:nth-child(5) { animation-delay: 8s; }
+        .slider img:nth-child(6) { animation-delay: 10s; }
+        .slider img:nth-child(7) { animation-delay: 12s; }
+
+        
+ 
+        @keyframes showHide {
+            /* 每张图只在属于自己的1%~15%内显示，其余时间隐藏 */
+            0%   { visibility: hidden; opacity: 0; }
+            1%   { visibility: visible; opacity: 1; }   /* 快速出现 */
+            14%  { visibility: visible; opacity: 1; }   /* 保持显示约1.5秒 */
+            15%  { visibility: hidden; opacity: 0; }   /* 快速消失 */
+            100% { visibility: hidden; opacity: 0; }
+        }       
+    </style>
+</head>
+<body>
+    <div class="slider">
+        <img src="images/p1.jpg" alt="图片1" />
+        <img src="images/p2.jpg" alt="图片2" />
+        <img src="images/p3.jpg" alt="图片3" />
+        <img src="images/p4.jpg" alt="图片4" />
+        <img src="images/p5.jpg" alt="图片5" />
+        <img src="images/p6.jpg" alt="图片6" />
+        <img src="images/p7.jpg" alt="图片7" />
+        
+    </div>
+    <div>
+        <div id="zt">七彩云南</div>
+        <div id="wz">
+         <p>
+        “七彩云南”四个字，最早源于一个古老的传说。相传两千多年前，汉武帝梦见彩云南现，便派人追访至此，于是“云南”之名由此而来。而“七彩”，则是对这片土地最贴切的形容——它真的像打翻了天神的调色盘，赤、橙、黄、绿、青、蓝、紫，人间所有的色彩都能在这里找到归宿。
+         </p>
+         <p>
+        红，是东川红土地的热情。站在高处望去，大地如被烈火灼烧过的绸缎，层层梯田翻涌着赭红、锈红与砖红，与蓝天白云形成最强烈的视觉撞击。黄，是罗平油菜花田的灿烂。每年二月，八十万亩油菜花同时绽放，从山脚到山顶，铺成一片金黄的海浪，蜂蝶飞舞其中，连风都带着蜜糖般的甜香。蓝，是洱海与泸沽湖的深邃。天空把颜色借给了湖水，于是水天一色，分不清哪里是天，哪里是水，只有偶尔划过的白帆或水鸟，才让人回过神来。白，是玉龙雪山的圣洁。终年不化的积雪在阳光下泛着银光，像一条巨龙静卧于云端，守护着山脚下的纳西人家。绿，是西双版纳热带雨林的生机。望天树直插云霄，古藤缠绕如蟒蛇，空气中弥漫着湿润的草木气息，让人恍若踏入侏罗纪时代。紫与青，是傍晚时分苍山十九峰的剪影，暮色从山脊线缓缓漫开，将整座大理古城笼罩在温柔的薄暮里。
+         </p>
+         <p>
+        然而，云南最动人的色彩，不只存在于自然之中，更活在二十五个世居民族的血脉里。彝族的火把节燃烧着红色的热情，白族的扎染浸透着蓝色的沉静，傣族的泼水节泼洒着透明的祝福،藏族的经幡在风中翻动着五彩的信仰。走在丽江古城的石板路上%，你会听见纳西古乐的低回婉转；坐在大理的民居院中%，你会看见白族阿妈手中的绣线如彩虹般流转；行至香格里拉的草甸上%，你会被藏族卓玛的歌声拽进广袤的天际。
+         </p>
+         <p>
+        去云南吧，那里从不缺风景，更不缺故事。每一次转身，都可能遇见一种新的色彩；每一寸土地，都藏着值得反复品读的人间温情。那不仅是一场旅行，更是一场与色彩的久别重逢。
+         </p>
+        </div>
+    </div>
+</body>
+</html>
