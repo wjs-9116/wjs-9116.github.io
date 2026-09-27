@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三国志 · 人物头像图 · 矩形羽化</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #888888;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px 0 70px 0;
+            font-family: '楷体', 'KaiTi', '华文楷体', serif;
+        }
+
+        .film-frame {
+            background-color: #ffffff;
+            width: 500px;
+            padding: 20px 0 20px 0;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+            border-radius: 6px;
+            position: relative;
+            margin-top: 0;
+        }
+
+        .gallery {
+            width: 100%;
+            padding: 0 30px;  /* 左右各30px：外侧10px+内侧10px+内容间距10px */
+            background-color: #ffffff;
+            position: relative;
+            min-height: 400px;
+        }
+
+        /* ===== 电影胶片装饰边条 — 左右各2条，每条10px，无间隔 ===== */
+        .film-strip-left-1,
+        .film-strip-left-2,
+        .film-strip-right-1,
+        .film-strip-right-2 {
+            position: absolute;
+            top: 0;
+            width: 10px;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* 左侧第一条（外侧）：黑20px 白20px 交替 */
+        .film-strip-left-1 {
+            left: 0;
+            background: repeating-linear-gradient(
+                to bottom,
+                #000000 0px,
+                #000000 20px,
+                #ffffff 20px,
+                #ffffff 40px
+            );
+            background-size: 100% 40px;
+        }
+
+        /* 左侧第二条（内侧）：白20px 黑20px 交替，紧挨着无间隔 */
+        .film-strip-left-2 {
+            left: 10px;
+            background: repeating-linear-gradient(
+                to bottom,
+                #ffffff 0px,
+                #ffffff 20px,
+                #000000 20px,
+                #000000 40px
+            );
+            background-size: 100% 40px;
+        }
+
+        /* 右侧第一条（内侧）：白20px 黑20px 交替 */
+        .film-strip-right-1 {
+            right: 10px;
+            background: repeating-linear-gradient(
+                to bottom,
+                #ffffff 0px,
+                #ffffff 20px,
+                #000000 20px,
+                #000000 40px
+            );
+            background-size: 100% 40px;
+        }
+
+        /* 右侧第二条（外侧）：黑20px 白20px 交替 */
+        .film-strip-right-2 {
+            right: 0;
+            background: repeating-linear-gradient(
+                to bottom,
+                #000000 0px,
+                #000000 20px,
+                #ffffff 20px,
+                #ffffff 40px
+            );
+            background-size: 100% 40px;
+        }
+
+        /* 标题 */
+        .header {
+            text-align: center;
+            padding: 12px 0 20px 0;
+            border-bottom: 1px solid #d8dce6;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            font-weight: 500;
+            letter-spacing: 8px;
+            color: #2c3e5c;
+            font-family: '楷体', 'KaiTi', '华文楷体', serif;
+            text-shadow: 1px 1px 2px rgba(44, 62, 92, 0.1);
+        }
+
+        .header h2 {
+            font-size: 24px;
+            font-weight: 400;
+            color: #2c3e5c;
+            letter-spacing: 6px;
+            margin-top: 6px;
+            font-family: '楷体', 'KaiTi', '华文楷体', serif;
+            opacity: 0.85;
+        }
+
+        /* 网格 */
+        .grid {
+            display: grid;
+            grid-template-columns: 130px 130px 130px;
+            gap: 10px;
+            justify-content: center;
+            padding: 4px 0 12px 0;
+            width: 410px;
+            margin: 0 auto;
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #ffffff;
+            position: relative;
+            cursor: pointer;
+        }
+
+        /* 图片容器 */
+        .img-wrapper {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            flex-shrink: 0;
+            background: #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+        }
+
+        .img-wrapper img {
+            width: 130px;
+            height: 130px;
+            object-fit: cover;
+            display: block;
+            border: none;
+            background: #f4f6fa;
+            pointer-events: none;
+        }
+
+        /* ===== 白色羽化边框 — 矩形径向渐变（ellipse + closest-side），均匀覆盖四边 ===== */
+        .img-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            /* 使用 ellipse + closest-side 确保渐变形状贴合矩形，四边均匀羽化 */
+            background: radial-gradient(ellipse closest-side at 50% 50%,
+                transparent 0%,
+                transparent 76.9%,   /* 100px / 130px = 76.9% */
+                rgba(255, 255, 255, 0.05) 79%,
+                rgba(255, 255, 255, 0.15) 82%,
+                rgba(255, 255, 255, 0.35) 85%,
+                rgba(255, 255, 255, 0.55) 88%,
+                rgba(255, 255, 255, 0.75) 91%,
+                rgba(255, 255, 255, 0.9) 94%,
+                rgba(255, 255, 255, 1) 97%,
+                rgba(255, 255, 255, 1) 100%
+            );
+            /* 从100px到130px共30px羽化范围，四边均匀 */
+            z-index: 2;
+            mix-blend-mode: normal;
+        }
+
+        /* 右下角标志图片 */
+        .badge {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            width: 28px;
+            height: 28px;
+            z-index: 20;
+            pointer-events: none;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+            background: transparent !important;
+        }
+
+        .badge img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: contain;
+            background: transparent !important;
+            mix-blend-mode: normal;
+        }
+
+        /* 图片下方文字 */
+        .card .label {
+            margin-top: 8px;
+            font-size: 19.5px;
+            font-weight: 400;
+            color: #2c3e5c;
+            font-family: '楷体', 'KaiTi', '华文楷体', serif;
+            letter-spacing: 1px;
+            text-align: center;
+            background: transparent;
+            padding: 0 2px;
+            white-space: nowrap;
+            border-bottom: 1px dotted #d0d7e6;
+            padding-bottom: 3px;
+            line-height: 1.4;
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 18px;
+            color: #7a839c;
+            margin-top: 22px;
+            font-family: '楷体', 'KaiTi', '华文楷体', serif;
+            letter-spacing: 2px;
+            border-top: 1px solid #e8ebf0;
+            padding-top: 14px;
+            opacity: 0.7;
+        }
+
+        /* ===== 隐藏层 mydiv ===== */
+        #mydiv {
+            display: none;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 240px;
+            height: 240px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            padding: 6px;
+            border: 3px solid #e0e4ed;
+            transition: top 0.2s ease;
+        }
+
+        #mydiv img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #f4f6fa;
+        }
+
+        #mydiv::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: -1;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 响应式 */
+        @media (max-width: 540px) {
+            body {
+                padding: 20px 0 70px 0;
+            }
+            .film-frame {
+                width: 100%;
+                border-radius: 0;
+                padding: 20px 0;
+            }
+            .gallery {
+                padding: 0 10px;
+                width: 100%;
+            }
+            .film-strip-left-1,
+            .film-strip-left-2,
+            .film-strip-right-1,
+            .film-strip-right-2 {
+                display: none;
+            }
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+                width: 100%;
+                margin: 0;
+            }
+            .img-wrapper,
+            .img-wrapper img {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 1/1;
+            }
+            .card .label {
+                font-size: 16px;
+                white-space: normal;
+            }
+            .header h1 {
+                font-size: 32px;
+                letter-spacing: 4px;
+            }
+            .header h2 {
+                font-size: 20px;
+            }
+            .badge {
+                width: 22px;
+                height: 22px;
+                bottom: 2px;
+                right: 2px;
+            }
+            #mydiv {
+                width: 200px;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="film-frame">
+        <div class="gallery">
+            <!-- 左侧两条胶片边条（无间隔） -->
+            <div class="film-strip-left-1"></div>
+            <div class="film-strip-left-2"></div>
+            <!-- 右侧两条胶片边条（无间隔） -->
+            <div class="film-strip-right-1"></div>
+            <div class="film-strip-right-2"></div>
+
+            <div class="header">
+                <h1>三国志</h1>
+                <h2>人物头像图</h2>
+            </div>
+
+            <div class="grid" id="cardGrid"></div>
+
+            <div class="footer-note">· 演义群英 · 三百图 ·</div>
+        </div>
+    </div>
+
+    <div id="mydiv">
+        <img id="previewImg" src="" alt="预览大图">
+    </div>
+
+    <script>
+        (function() {
+            const grid = document.getElementById('cardGrid');
+            const mydiv = document.getElementById('mydiv');
+            const previewImg = document.getElementById('previewImg');
+
+            if (!grid || !mydiv || !previewImg) return;
+
+            const TOTAL = 300;
+            const basePath = 'images/san';
+            const ext = '.jpg';
+            const badgePath = 'images/bz.gif';
+
+            const padNumber = (num) => String(num).padStart(3, '0');
+
+            const fragment = document.createDocumentFragment();
+
+            for (let i = 1; i <= TOTAL; i++) {
+                const numPadded = padNumber(i);
+                const imgSrc = `${basePath}${numPadded}${ext}`;
+                const labelText = `三国${numPadded}`;
+
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.dataset.imgSrc = imgSrc;
+                card.dataset.index = i;
+
+                const wrapper = document.createElement('div');
+                wrapper.className = 'img-wrapper';
+
+                const img = document.createElement('img');
+                img.src = imgSrc;
+                img.alt = labelText;
+                img.loading = 'lazy';
+
+                img.onerror = function() {
+                    this.style.background = '#dce1ec';
+                    this.style.opacity = '0.7';
+                };
+
+                wrapper.appendChild(img);
+
+                const badgeDiv = document.createElement('div');
+                badgeDiv.className = 'badge';
+                const badgeImg = document.createElement('img');
+                badgeImg.src = badgePath;
+                badgeImg.alt = '标志';
+                badgeImg.loading = 'lazy';
+                badgeImg.style.background = 'transparent';
+                badgeImg.style.backgroundColor = 'transparent';
+                badgeImg.onerror = function() {
+                    this.style.display = 'none';
+                };
+                badgeDiv.appendChild(badgeImg);
+                wrapper.appendChild(badgeDiv);
+
+                const label = document.createElement('div');
+                label.className = 'label';
+                label.textContent = labelText;
+
+                card.appendChild(wrapper);
+                card.appendChild(label);
+                fragment.appendChild(card);
+            }
+
+            grid.appendChild(fragment);
+
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card) => {
+                card.addEventListener('click', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const topPos = rect.top + 50;
+
+                    const imgSrc = this.dataset.imgSrc;
+                    if (!imgSrc) return;
+
+                    previewImg.src = imgSrc;
+                    previewImg.alt = this.querySelector('.label')?.textContent || '预览';
+
+                    mydiv.style.display = 'block';
+                    mydiv.style.top = topPos + 'px';
+                });
+            });
+
+            previewImg.addEventListener('click', function(e) {
+                e.stopPropagation();
+                mydiv.style.display = 'none';
+            });
+
+            window.addEventListener('scroll', function() {
+                if (mydiv.style.display === 'block') {
+                    mydiv.style.display = 'none';
+                }
+            });
+
+            window.addEventListener('resize', function() {
+                if (mydiv.style.display === 'block') {
+                    mydiv.style.display = 'none';
+                }
+            });
+
+            console.log('✅ 矩形羽化：ellipse + closest-side，四边均匀覆盖30px羽化范围');
+        })();
+    </script>
+</body>
+</html>

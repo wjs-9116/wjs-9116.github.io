@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>万里长城 · 旋转光点</title>
+    <link rel="stylesheet" href="images/style.css">
+    <style>
+        /* ===== 彻底修复：只保留一个滚动条 ===== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            overflow-y: auto;     /* 让html控制滚动，自动出现 */
+            overflow-x: hidden;
+            height: 100%;
+        }
+        
+        body {
+            margin: 0;
+            padding: 30px 0 130px 0;    /* 底部增加100px */
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            background: #d3d3d3 !important;
+            font-family: '楷体', 'KaiTi', '华文楷体', serif;
+            overflow: visible;     /* 关键：不允许body产生滚动 */
+            height: auto;
+        }
+
+        /* ===== 主容器：固定1024px ===== */
+        .main-container {
+            width: 1024px;
+            min-width: 1024px;
+            max-width: 1024px;
+            position: relative;
+            border: 4px double #ffffff;
+            box-shadow: 0 0 0 2px #d3d3d3;
+            flex-shrink: 0;
+            margin: 0 auto;
+            background: #cccc99;
+        }
+
+        /* ===== 图片区域 ===== */
+        .image-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            background: #1a1a1a;
+        }
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            background: #1a1a1a;
+            overflow: hidden;
+        }
+
+        .carousel img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .carousel img.active { opacity: 1; z-index: 2; }
+        .carousel img.fade-out { opacity: 0; z-index: 1; }
+
+        /* ===== 光点特效 ===== */
+        .light-sphere-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        .light-sphere-content {
+            width: 100%;
+            height: 100%;
+            transform: translate(300px, -450px) scale(-0.6, -0.6);
+            transform-origin: center center;
+        }
+
+        .light-sphere-content .container {
+            width: 100%;
+            height: 100%;
+            perspective: 280px;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .light-sphere-content .container_rotate {
+            transform: rotate(24deg);
+            width: 100%;
+            height: 100%;
+        }
+
+        .light-sphere-content .rotate,
+        .light-sphere-content .flip_rotate,
+        .light-sphere-content .flip_pos,
+        .light-sphere-content .flip {
+            transform-style: preserve-3d;
+        }
+
+        /* ===== 文字区块 ===== */
+        .text-wrapper {
+            background: #cccc99;
+            padding: 20px 40px 30px;
+            text-align: left;
+            color: #1a2a4a;
+        }
+
+        .title {
+            font-size: 40px;
+            line-height: 60px;
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: 2px;
+            margin: 0 0 12px;
+        }
+
+        .content p {
+            font-size: 30px;
+            line-height: 45px;
+            text-indent: 60px;
+            text-align: left;
+            margin: 0 0 12px;
+        }
+        .content p:last-of-type { margin-bottom: 0; }
+
+        /* ===== 美化滚动条（仅浏览器窗口的滚动条） ===== */
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+            background: #d3d3d3;
+        }
+        ::-webkit-scrollbar-track {
+            background: #d3d3d3;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 6px;
+            border: 2px solid #d3d3d3;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Firefox */
+        * {
+            scrollbar-width: auto;
+            scrollbar-color: #888 #d3d3d3;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="image-wrapper">
+            <div class="carousel" id="carousel">
+                <img src="images/长城1.JPG" alt="长城1" class="active">
+                <img src="images/长城2.JPG" alt="长城2">
+                <img src="images/长城3.JPG" alt="长城3">
+            </div>
+
+            <div class="light-sphere-wrapper">
+                <div class="light-sphere-content">
+                    <div class="container">
+                        <div class="container_rotate" id="sphereRotate">
+                            <!-- 50个光点由JavaScript生成 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-wrapper">
+            <div class="title">万里长城</div>
+            <div class="content" id="textContent">
+                <p>万里长城万里长</p>
+                <p>秦始皇将六国残垣连缀成万里巨龙时，或许未曾想到，这道土石防线最终会成为民族最深处的精神图腾。长城蜿蜒于群山之巅，每一块城砖都在诉说守护与追寻的故事。</p>
+                <p>汉武帝将长城延伸至河西走廊，玉门关外的烽燧与嘉峪关的雄姿，见证了帝国抱负。长城不仅是防御工事，更是丝绸之路的守护者，汉家子弟在此眺望大漠孤烟，西域商旅在关前卸下货物。长城既闭合又敞开，恰如一个民族的胸襟。</p>
+                <p>千年风雨中，长城见证无数朝代更迭。唐代王昌龄写下"秦时明月汉时关"，长城成为时间坐标；明将戚继光重修雄关，加固是对过往的致敬。长城在岁月中被不断改写，却从未被历史遗忘。</p>
+                <p>清军入关后，长城军事意义消解，精神内核却在民族危亡时刻升华。近代炮火从海上逼近，长城仍成为民族的精神支柱，被赋予"血肉"与"钢铁"的含义。</p>
+                <p>今日抚摸着沧桑城砖，仿佛能听见历史的嘶鸣。长城之所以成为中华精神的象征，正因其诠释了韧性——既可防御坚守，又可开放包容。这种特质，正是中华文明生生不息的密码。</p>
+                <p>万里长城万里长，它不只是地理的长度，更是时间纵深与精神广度。当全球化浪潮席卷，长城依然屹立，提醒我们：真正的强大，在于守护中保持开放，开放中不失本真。这道古老城墙，最终成为民族精神高度的写照。</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== 生成50个光点 =====
+        (function() {
+            const container = document.getElementById('sphereRotate');
+            const dotsHTML = Array(50).fill(0).map(function() {
+                return '<div class="rotate"><div class="flip_rotate"><div class="flip_pos"><div class="flip"></div></div></div></div>';
+            }).join('');
+            container.innerHTML = dotsHTML;
+        })();
+
+        // ===== 图片轮播 =====
+        (function() {
+            var images = document.querySelectorAll('#carousel img');
+            var current = 0;
+            var timer = null;
+
+            function next() {
+                images.forEach(function(img) {
+                    img.classList.remove('active', 'fade-out');
+                });
+                images[current].classList.add('fade-out');
+                current = (current + 1) % images.length;
+                images[current].classList.add('active');
+            }
+
+            function start() {
+                if (timer) clearInterval(timer);
+                timer = setInterval(next, 4000);
+            }
+
+            images.forEach(function(img, i) {
+                img.classList.remove('active', 'fade-out');
+                if (i === 0) img.classList.add('active');
+            });
+            start();
+        })();
+    </script>
+</body>
+</html>

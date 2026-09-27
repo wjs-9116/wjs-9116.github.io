@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海底世界 · 捕获小鱼</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0033ff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 0;
+            padding: 0;
+            font-family: '楷体', 'KaiTi', '华文楷体', serif;
+        }
+
+        .container {
+            width: 900px;
+            max-width: 100%;
+            text-align: center;
+            background-color: transparent;
+            padding: 0;
+            margin: 0;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .title {
+            font-family: '楷体', 'KaiTi', '华文楷体', serif;
+            color: #ffffff;
+            font-size: 50px;
+            line-height: 70px;
+            font-weight: bold;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            letter-spacing: 2px;
+        }
+
+        .sub-title {
+            font-family: '楷体', 'KaiTi', '华文楷体', serif;
+            color: #ffffff;
+            font-size: 30px;
+            line-height: 50px;
+            font-weight: normal;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .image-wrapper {
+            margin: 0;
+            padding: 0;
+            line-height: 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-wrapper img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+            border: 0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .fish-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .fish {
+            position: absolute;
+            display: block;
+            width: auto;
+            height: auto;
+            max-width: 60px;
+            max-height: 40px;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: none;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                width: 100%;
+                max-width: 100%;
+                padding: 0 10px;
+            }
+            .image-wrapper img {
+                width: 100%;
+                height: auto;
+            }
+            .title {
+                font-size: 50px;
+                line-height: 70px;
+            }
+            .sub-title {
+                font-size: 30px;
+                line-height: 50px;
+            }
+            .fish {
+                max-width: 40px;
+                max-height: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 6px;
+            }
+            .title {
+                font-size: 50px !important;
+                line-height: 70px !important;
+            }
+            .sub-title {
+                font-size: 30px !important;
+                line-height: 50px !important;
+            }
+            .fish {
+                max-width: 30px;
+                max-height: 22px;
+            }
+        }
+
+        .title, .sub-title {
+            font-size-adjust: none;
+            -webkit-text-size-adjust: none;
+            text-size-adjust: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">海底世界</h1>
+        <div class="sub-title" id="captureText">用鼠标点击小鱼进行捕获！</div>
+        <div class="image-wrapper" id="imageWrapper">
+            <img src="images/bj.jpg" alt="海底世界背景图" id="bgImage">
+            <div class="fish-container" id="fishContainer"></div>
+        </div>
+    </div>
+
+    <audio id="bgMusic" src="images/bgsound.mp3" loop preload="auto"></audio>
+
+    <script>
+        (function() {
+            const fishContainer = document.getElementById('fishContainer');
+            const wrapper = document.getElementById('imageWrapper');
+            const captureText = document.getElementById('captureText');
+            const bgMusic = document.getElementById('bgMusic');
+
+            let wrapperWidth = wrapper.clientWidth;
+            let wrapperHeight = wrapper.clientHeight;
+            let captureCount = 0;
+            let isMusicPlaying = false;
+
+            const fishList = [];
+
+            function getRandomInt(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            function getRandomFloat(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            function playAudio() {
+                if (!isMusicPlaying) {
+                    bgMusic.play().then(function() {
+                        isMusicPlaying = true;
+                    }).catch(function(e) {
+                        console.log('播放失败:', e);
+                    });
+                }
+            }
+
+            function createFish(src, isRightMoving) {
+                const img = document.createElement('img');
+                img.src = src;
+                img.className = 'fish';
+                img.style.position = 'absolute';
+                img.style.display = 'block';
+                img.style.width = 'auto';
+                img.style.height = 'auto';
+                img.style.maxWidth = '60px';
+                img.style.maxHeight = '40px';
+                img.style.cursor = 'pointer';
+                img.style.pointerEvents = 'auto';
+
+                const maxX = Math.max(0, wrapperWidth - 60);
+                const maxY = Math.max(0, wrapperHeight - 40);
+                const x = getRandomInt(0, maxX);
+                const y = getRandomInt(0, maxY);
+
+                img.style.left = x + 'px';
+                img.style.top = y + 'px';
+
+                let vx, vy;
+                if (isRightMoving) {
+                    vx = getRandomFloat(1, 7);
+                } else {
+                    vx = getRandomFloat(-7, -1);
+                }
+                vy = getRandomFloat(-3, 3);
+
+                const fishData = {
+                    element: img,
+                    x: x,
+                    y: y,
+                    vx: vx,
+                    vy: vy,
+                    isRightMoving: isRightMoving,
+                    width: 60,
+                    height: 40
+                };
+
+                img.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    playAudio();
+                    captureFish(fishData);
+                });
+
+                fishContainer.appendChild(img);
+                return fishData;
+            }
+
+            function captureFish(fish) {
+                const containerWidth = wrapper.clientWidth;
+                const containerHeight = wrapper.clientHeight;
+
+                if (fish.isRightMoving) {
+                    fish.x = -40 - fish.width;
+                } else {
+                    fish.x = containerWidth + 40;
+                }
+
+                fish.y = Math.min(Math.max(fish.y, 0), containerHeight - fish.height);
+                fish.element.style.left = fish.x + 'px';
+                fish.element.style.top = fish.y + 'px';
+
+                captureCount++;
+                captureText.textContent = '你已经捕获到' + captureCount + '条小鱼！';
+            }
+
+            function initFish() {
+                const yFiles = ['y1.gif', 'y2.gif', 'y3.gif', 'y4.gif', 'y5.gif'];
+                const zFiles = ['z1.gif', 'z2.gif', 'z3.gif', 'z4.gif', 'z5.gif'];
+
+                for (let i = 0; i < 10; i++) {
+                    const idx = i % 5;
+                    const src = 'images/' + yFiles[idx];
+                    const fish = createFish(src, false);
+                    fishList.push(fish);
+                }
+
+                for (let i = 0; i < 10; i++) {
+                    const idx = i % 5;
+                    const src = 'images/' + zFiles[idx];
+                    const fish = createFish(src, true);
+                    fishList.push(fish);
+                }
+            }
+
+            function updateFish() {
+                const containerWidth = wrapper.clientWidth;
+                const containerHeight = wrapper.clientHeight;
+
+                const maxFishWidth = 60;
+                const maxFishHeight = 40;
+
+                for (let i = 0; i < fishList.length; i++) {
+                    const fish = fishList[i];
+                    let newX = fish.x + fish.vx;
+                    let newY = fish.y + fish.vy;
+
+                    if (fish.isRightMoving) {
+                        if (newX > containerWidth + 40) {
+                            newX = -40 - maxFishWidth;
+                        }
+                    } else {
+                        if (newX < -40 - maxFishWidth) {
+                            newX = containerWidth + 40;
+                        }
+                    }
+
+                    if (newY < 0) {
+                        newY = 0;
+                        fish.vy = -fish.vy;
+                    } else if (newY > containerHeight - maxFishHeight) {
+                        newY = containerHeight - maxFishHeight;
+                        fish.vy = -fish.vy;
+                    }
+
+                    fish.x = newX;
+                    fish.y = newY;
+
+                    fish.element.style.left = newX + 'px';
+                    fish.element.style.top = newY + 'px';
+
+                    if (Math.random() < 0.05) {
+                        if (fish.isRightMoving) {
+                            fish.vx = getRandomFloat(1, 7);
+                        } else {
+                            fish.vx = getRandomFloat(-7, -1);
+                        }
+                        fish.vy = getRandomFloat(-3, 3);
+                    }
+                }
+            }
+
+            function resizeFish() {
+                const newWidth = wrapper.clientWidth;
+                const newHeight = wrapper.clientHeight;
+
+                if (newWidth !== wrapperWidth || newHeight !== wrapperHeight) {
+                    wrapperWidth = newWidth;
+                    wrapperHeight = newHeight;
+
+                    const maxFishWidth = 60;
+                    const maxFishHeight = 40;
+
+                    for (let i = 0; i < fishList.length; i++) {
+                        const fish = fishList[i];
+                        if (fish.x > wrapperWidth - maxFishWidth) {
+                            fish.x = wrapperWidth - maxFishWidth;
+                        }
+                        if (fish.y > wrapperHeight - maxFishHeight) {
+                            fish.y = wrapperHeight - maxFishHeight;
+                        }
+                        fish.element.style.left = fish.x + 'px';
+                        fish.element.style.top = fish.y + 'px';
+                    }
+                }
+            }
+
+            function gameLoop() {
+                updateFish();
+                resizeFish();
+            }
+
+            function init() {
+                wrapperWidth = wrapper.clientWidth;
+                wrapperHeight = wrapper.clientHeight;
+
+                initFish();
+                setInterval(gameLoop, 100);
+
+                window.addEventListener('resize', function() {
+                    wrapperWidth = wrapper.clientWidth;
+                    wrapperHeight = wrapper.clientHeight;
+                });
+
+                bgMusic.play().then(function() {
+                    isMusicPlaying = true;
+                }).catch(function(e) {
+                    console.log('自动播放被阻止，等待用户交互');
+                });
+
+                document.addEventListener('click', function(e) {
+                    playAudio();
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+</body>
+</html>

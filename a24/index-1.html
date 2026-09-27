@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>植树造林</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #e0f0e0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0 0 50px 0;
+        }
+        .container {
+            width: 1600px;
+            background-color: #e0f0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+        }
+        h1 {
+            font-family: '楷体', 'KaiTi', serif;
+            color: #3e2a1b;
+            font-size: 40px;
+            line-height: 50px;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f0e0;
+        }
+        .table-wrap {
+            width: 1600px;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f0e0;
+        }
+        table.outer {
+            width: 1600px;
+            height: 900px;
+            border-collapse: separate;
+            border-spacing: 2px;
+            background-image: url('images/沙丘.jpg');
+            background-size: cover;
+            background-position: center;
+            table-layout: fixed;
+            margin: 0;
+            padding: 0;
+            border: 2px solid #1e4d2b;
+        }
+        table.outer td {
+            border: 2px solid #1e4d2b;
+            padding: 0;
+            margin: 0;
+            vertical-align: top;
+            background-color: transparent;
+        }
+        #控制区 {
+            width: 150px;
+            background-color: transparent;
+        }
+        #沙盘区 {
+            width: 1450px;
+            height: 900px;
+            background-color: transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        table.inner {
+            width: 145px;
+            height: 900px;
+            border-collapse: collapse;
+            border: none;
+            table-layout: fixed;
+            margin: 0 auto;
+            background-color: #e0f0e0;
+        }
+        table.inner td {
+            border: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+            vertical-align: middle;
+            height: 60px;
+            line-height: 60px;
+            font-family: '楷体', 'KaiTi', serif;
+            color: #1e4d2b;
+            font-size: 30px;
+            font-weight: bold;
+            background-color: #e0f0e0;
+        }
+        table.inner td img {
+            display: inline-block;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+        .tree-img {
+            width: 40px;
+            height: 60px;
+            object-fit: contain;
+        }
+        .clover-img {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .sand-tree {
+            position: absolute;
+            width: 40px;
+            height: 60px;
+            object-fit: contain;
+            cursor: pointer;
+            user-select: none;
+        }
+        a, img, button, input, select, textarea, div, span, p {
+            margin: 0;
+            padding: 0;
+            border: none;
+            outline: none;
+            text-decoration: none;
+            list-style: none;
+            background: transparent;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>植树造林</h1>
+    <div class="table-wrap">
+        <table class="outer">
+            <tr>
+                <td id="控制区">
+                    <table class="inner">
+                        <tr><td><img src="images/三叶草.gif" alt="三叶草" class="clover-img"></td></tr>
+                        <tr><td>左侧选树</td></tr>
+                        <tr><td>右侧生长</td></tr>
+                        <tr><td><img src="images/y1.png" alt="y1" class="tree-img" data-src="images/y1.png"><img src="images/y2.png" alt="y2" class="tree-img" data-src="images/y2.png"><img src="images/y3.png" alt="y3" class="tree-img" data-src="images/y3.png"></td></tr>
+                        <tr><td><img src="images/y4.png" alt="y4" class="tree-img" data-src="images/y4.png"><img src="images/y5.png" alt="y5" class="tree-img" data-src="images/y5.png"><img src="images/y6.png" alt="y6" class="tree-img" data-src="images/y6.png"></td></tr>
+                        <tr><td><img src="images/y7.png" alt="y7" class="tree-img" data-src="images/y7.png"><img src="images/y8.png" alt="y8" class="tree-img" data-src="images/y8.png"><img src="images/y9.png" alt="y9" class="tree-img" data-src="images/y9.png"></td></tr>
+                        <tr><td><img src="images/y10.png" alt="y10" class="tree-img" data-src="images/y10.png"><img src="images/y11.png" alt="y11" class="tree-img" data-src="images/y11.png"><img src="images/y12.png" alt="y12" class="tree-img" data-src="images/y12.png"></td></tr>
+                        <tr><td><img src="images/y13.png" alt="y13" class="tree-img" data-src="images/y13.png"><img src="images/y14.png" alt="y14" class="tree-img" data-src="images/y14.png"><img src="images/y15.png" alt="y15" class="tree-img" data-src="images/y15.png"></td></tr>
+                        <tr><td><img src="images/y16.png" alt="y16" class="tree-img" data-src="images/y16.png"><img src="images/y17.png" alt="y17" class="tree-img" data-src="images/y17.png"><img src="images/y18.png" alt="y18" class="tree-img" data-src="images/y18.png"></td></tr>
+                        <tr><td><img src="images/y19.png" alt="y19" class="tree-img" data-src="images/y19.png"><img src="images/y20.png" alt="y20" class="tree-img" data-src="images/y20.png"><img src="images/y21.png" alt="y21" class="tree-img" data-src="images/y21.png"></td></tr>
+                        <tr><td><img src="images/y22.png" alt="y22" class="tree-img" data-src="images/y22.png"><img src="images/y23.png" alt="y23" class="tree-img" data-src="images/y23.png"><img src="images/y24.png" alt="y24" class="tree-img" data-src="images/y24.png"></td></tr>
+                        <tr><td><img src="images/y25.png" alt="y25" class="tree-img" data-src="images/y25.png"><img src="images/y26.png" alt="y26" class="tree-img" data-src="images/y26.png"><img src="images/y27.png" alt="y27" class="tree-img" data-src="images/y27.png"></td></tr>
+                        <tr><td><img src="images/y28.png" alt="y28" class="tree-img" data-src="images/y28.png"><img src="images/y29.png" alt="y29" class="tree-img" data-src="images/y29.png"><img src="images/y30.png" alt="y30" class="tree-img" data-src="images/y30.png"></td></tr>
+                        <tr><td>关于</td></tr>
+                        <tr><td>用鼠标点</td></tr>
+                    </table>
+                </td>
+                <td id="沙盘区"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script>
+    (function() {
+        var sandbox = document.getElementById('沙盘区');
+        var treeImages = document.querySelectorAll('.tree-img');
+        var sandWidth = 1450;
+        var sandHeight = 900;
+
+        // 点击控制区树木 → 在沙盘随机位置生成新树
+        treeImages.forEach(function(img) {
+            img.addEventListener('click', function(e) {
+                e.stopPropagation();
+                var src = this.getAttribute('data-src') || this.src;
+                var newImg = document.createElement('img');
+                newImg.src = src;
+                newImg.className = 'sand-tree';
+                newImg.style.width = '40px';
+                newImg.style.height = '60px';
+                var randomX = Math.floor(Math.random() * (sandWidth - 40));
+                var randomY = Math.floor(Math.random() * (sandHeight - 60));
+                newImg.style.left = randomX + 'px';
+                newImg.style.top = randomY + 'px';
+                sandbox.appendChild(newImg);
+
+                // 为新生成的树绑定点击生长事件
+                newImg.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    // 宽度增加4px，高度增加6px，向左移动2px，向上移动6px
+                    var currentWidth = parseInt(this.style.width) || 40;
+                    var currentHeight = parseInt(this.style.height) || 60;
+                    var currentLeft = parseInt(this.style.left) || 0;
+                    var currentTop = parseInt(this.style.top) || 0;
+                    this.style.width = (currentWidth + 4) + 'px';
+                    this.style.height = (currentHeight + 6) + 'px';
+                    this.style.left = (currentLeft - 2) + 'px';
+                    this.style.top = (currentTop - 6) + 'px';
+                });
+            });
+        });
+
+        // 注意：沙盘区初始没有树，所以无需额外绑定。
+        // 但为了支持可能直接写在html中的树（如果有），但本设计所有树均由点击生成，所以以上逻辑已覆盖。
+        // 另外，如果沙盘区已存在树（但本设计没有），我们可以通过监听沙盘区的事件委托来处理。
+        // 但为了更健壮，也可以使用事件委托监听沙盘区内的图片点击。
+        // 但这里我们在生成时直接绑定，简单可靠。
+    })();
+</script>
+</body>
+</html>

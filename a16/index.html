@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>水墨轻描</title>
+    <style>
+        div{  
+           width: 600px;
+           margin: 0 auto;
+           position: relative;            
+        }
+        #zt {
+            font-family: "楷体";
+            font-size: 50px;
+            font-weight: bold;
+            color: #096840;
+            text-shadow: 3px 3px 6px #b1b1b0;
+        }
+        #myimg {
+            position: absolute;
+            top: 135px;
+            left: 103px;
+            display: block;
+            margin: 0 auto;
+            z-index: 1;
+        }
+        table {
+            position: relative;
+            z-index: 2;
+        }
+       
+    </style>
+    <script type="text/javascript">
+        function myview(imgsrc) {
+            var myimg = document.getElementById("myimg");
+            myimg.src = "images/" + imgsrc;
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <table width="600" align="center" cellpadding="0" cellspacing="0">
+        
+            <tr>
+                <td id="zt" height="60px" align="center" valign="middle">水墨轻描</td>
+            </tr>
+            <tr>
+                <td height="400px" align="center" valign="middle"><img src="images/bj.png" alt=""></td>
+            </tr>
+            
+            <tr>
+                <td height="70px" align="center" valign="middle">
+                    <table width="600" align="center" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td height="70px" width="90px" align="center"><img src="images/q1.gif" alt="" onclick="myview('z1.jpg')"></td>
+                            <td height="70px" width="90px" align="center"><img src="images/q2.gif" alt="" onclick="myview('z2.jpg')"></td>
+                            <td height="70px" width="90px" align="center"><img src="images/q3.gif" alt="" onclick="myview('z3.jpg')"></td>
+                            <td height="70px" width="90px" align="center"><img src="images/q4.gif" alt="" onclick="myview('z4.jpg')"></td>
+                            <td height="70px" width="90px" align="center"><img src="images/q5.gif" alt="" onclick="myview('z5.jpg')"></td>
+                            <td height="70px" width="90px" align="center"><img src="images/q6.gif" alt="" onclick="myview('z6.jpg')"></td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>          
+        
+        </table>
+
+    
+        <img id="myimg" src="" alt="" style="display:block;margin:0 auto;">
+    </div>
+</body>
+</html>

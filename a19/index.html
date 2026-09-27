@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>花叶蝶 · 三色集</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            font-family: '楷体', 'KaiTi', '华文楷体', serif;
+            padding: 30px 20px;
+        }
+        /* 主容器：宽度700px，背景图水平拉伸+垂直平铺 */
+        .butterfly-container {
+            width: 700px;
+            max-width: 100%;
+            background-image: url('images/bj.png');
+            background-repeat: repeat-y;
+            background-size: 100% auto;
+            background-position: top center;
+            border-radius: 20px;
+            padding: 22px 15px 30px 15px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+            margin: 0 auto;
+            background-clip: padding-box;
+        }
+        /* 总标题 */
+        .main-title {
+            text-align: center;
+            font-size: 34px;
+            font-weight: 600;
+            color: #1a2b4a;
+            font-family: '楷体', 'KaiTi', '华文楷体', serif;
+            letter-spacing: 8px;
+            padding-bottom: 14px;
+            border-bottom: 2px dashed rgba(176, 207, 176, 0.6);
+            margin-bottom: 18px;
+            background: transparent;
+        }
+        /* 每个表格的外层容器 */
+        .table-section {
+            margin-bottom: 28px;
+            display: flex;
+            justify-content: center;
+        }
+        .table-section:last-child {
+            margin-bottom: 0;
+        }
+        /* 表格：宽度360px，内部无边框，居中对齐 */
+        .butterfly-table {
+            width: 360px;              /* 修改为360px */
+            border-collapse: collapse;
+            border: 0;
+            table-layout: fixed;
+            margin: 0 auto;
+            background: transparent;
+        }
+        .butterfly-table td {
+            border: 0;
+            padding: 0;
+            text-align: center;
+            vertical-align: middle;
+            font-family: '楷体', 'KaiTi', '华文楷体', serif;
+            color: #1a2b4a;
+            font-weight: normal;
+            letter-spacing: 0.3px;
+            background: transparent;
+        }
+        /* 图片单元格：高度60px */
+        .img-cell {
+            height: 60px;
+            line-height: 60px;
+            background-color: transparent;
+        }
+        .img-cell img {
+            display: block;
+            width: 80px;
+            height: 60px;
+            object-fit: fill;
+            margin: 0 auto;
+            border: 0;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+        /* 文字单元格：高度25px */
+        .text-cell {
+            height: 25px;
+            line-height: 25px;
+            font-size: 15px;
+            color: #1a2b4a;
+            font-family: '楷体', 'KaiTi', '华文楷体', serif;
+            font-weight: 400;
+            background-color: transparent;
+            letter-spacing: 0.6px;
+        }
+        /* 标题行：跨4列 */
+        .title-cell {
+            height: 44px;
+            line-height: 44px;
+            font-size: 22px;
+            font-weight: 500;
+            color: #1a2b4a;
+            font-family: '楷体', 'KaiTi', '华文楷体', serif;
+            letter-spacing: 2px;
+            background-color: transparent;
+            border: 0;
+            text-align: center;
+            vertical-align: middle;
+        }
+        /* 小屏适配：容器宽度自动调整，表格随之缩放 */
+        @media (max-width: 720px) {
+            .butterfly-container {
+                width: 98%;
+                padding: 15px 8px;
+            }
+            .butterfly-table {
+                width: 100%;
+                max-width: 360px;      /* 小屏下最大360px */
+            }
+            .img-cell img {
+                width: 100%;
+                height: auto;
+                max-width: 80px;
+                max-height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="butterfly-container">
+    <!-- 总标题 “花叶蝶” -->
+    <div class="main-title">🌸 花叶蝶 🦋</div>
+
+    <!-- ========= 1. 蝴蝶200 ========= -->
+    <div class="table-section">
+        <table class="butterfly-table">
+            <thead>
+                <tr><td colspan="4" class="title-cell">🦋 蝴蝶200</td></tr>
+            </thead>
+            <tbody id="butterflyBody"></tbody>
+        </table>
+    </div>
+
+    <!-- ========= 2. 鲜花200 ========= -->
+    <div class="table-section">
+        <table class="butterfly-table">
+            <thead>
+                <tr><td colspan="4" class="title-cell">🌺 鲜花200</td></tr>
+            </thead>
+            <tbody id="flowerBody"></tbody>
+        </table>
+    </div>
+
+    <!-- ========= 3. 绿叶200 ========= -->
+    <div class="table-section">
+        <table class="butterfly-table">
+            <thead>
+                <tr><td colspan="4" class="title-cell">🌿 绿叶200</td></tr>
+            </thead>
+            <tbody id="leafBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const total = 200;
+        const cols = 4;
+
+        const sets = [
+            { prefix: 'x', label: '蝴蝶', tbodyId: 'butterflyBody' },
+            { prefix: 'y', label: '鲜花', tbodyId: 'flowerBody' },
+            { prefix: 'z', label: '绿叶', tbodyId: 'leafBody' }
+        ];
+
+        function renderTable(tbodyId, prefix, label) {
+            const tbody = document.getElementById(tbodyId);
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            for (let i = 0; i < total; i += cols) {
+                // 图片行
+                const imgRow = document.createElement('tr');
+                for (let j = 0; j < cols; j++) {
+                    const idx = i + j + 1;
+                    const td = document.createElement('td');
+                    td.className = 'img-cell';
+                    if (idx <= total) {
+                        const img = document.createElement('img');
+                        img.src = `images/${prefix}${idx}.jpg`;
+                        img.alt = `${label}${idx}`;
+                        img.width = 80;
+                        img.height = 60;
+                        img.style.width = '80px';
+                        img.style.height = '60px';
+                        td.appendChild(img);
+                    } else {
+                        td.appendChild(document.createTextNode(''));
+                    }
+                    imgRow.appendChild(td);
+                }
+                tbody.appendChild(imgRow);
+
+                // 文字行
+                const textRow = document.createElement('tr');
+                for (let j = 0; j < cols; j++) {
+                    const idx = i + j + 1;
+                    const td = document.createElement('td');
+                    td.className = 'text-cell';
+                    if (idx <= total) {
+                        td.textContent = `${label}${idx}`;
+                    } else {
+                        td.textContent = '';
+                    }
+                    textRow.appendChild(td);
+                }
+                tbody.appendChild(textRow);
+            }
+        }
+
+        sets.forEach(item => {
+            renderTable(item.tbodyId, item.prefix, item.label);
+        });
+    })();
+</script>
+</body>
+</html>
